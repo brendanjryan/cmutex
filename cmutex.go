@@ -5,8 +5,8 @@ import (
 	"sync/atomic"
 )
 
-// CMutex is a context-aware synchronization primitive.
-type CMutex struct {
+// Mutex is a context-aware synchronization primitive.
+type Mutex struct {
 	c  int32
 	ch lazyChan
 }
@@ -16,8 +16,7 @@ type CMutex struct {
 // until the context expires.
 //
 // If the take is not successful this method will return an error.
-func (m *CMutex) Lock(ctx context.Context) error {
-
+func (m *Mutex) Lock(ctx context.Context) error {
 	// increment the counter on the mutex
 	v := atomic.AddInt32(&m.c, 1)
 	if v == 1 {
@@ -38,9 +37,9 @@ func (m *CMutex) Lock(ctx context.Context) error {
 }
 
 // Unlock the mutex.
-// Similar to sync.CMutex, this method will panic if
+// Similar to sync.Mutex, this method will panic if
 // the mutex is already unlocked.
-func (m *CMutex) Unlock() {
+func (m *Mutex) Unlock() {
 	v := atomic.AddInt32(&m.c, -1)
 	if v < 0 {
 		panic("unlock of an already unlocked mutex")
