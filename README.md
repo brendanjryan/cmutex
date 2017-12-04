@@ -1,6 +1,6 @@
 # cmutex
 
-`cmutex` provides a mutex which accepts a native `context` item as a means of provided bounded wait.
+`cmutex` provides a mutex which accepts a native `context` item as a means of guaranteeing bounded wait.
 
 ## Example usage
 
